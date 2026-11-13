@@ -1,0 +1,13 @@
+# Diviner application
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.0
+numpy>=1.26
+pandas>=2.2
+
+# Kronos (also listed in Kronos/requirements.txt)
+torch>=2.0.0
+einops>=0.8.0
+huggingface_hub>=0.33.0
+safetensors>=0.4.0
+tqdm>=4.66.0

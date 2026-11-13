@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diviner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <header class="top">
+    <div class="brand-block">
+      <h1 class="brand">Diviner</h1>
+      <p class="tagline">Kronos futures foresight · live from TradingView</p>
+    </div>
+    <div class="controls">
+      <div class="field field-symbol">
+        <span>Symbol</span>
+        <div class="symbol-combo" id="symbol-combo">
+          <input id="symbol" type="text" autocomplete="off" spellcheck="false" placeholder="ES1!" />
+          <button type="button" id="symbol-toggle" class="symbol-toggle" aria-label="Show symbol history" aria-expanded="false">▾</button>
+          <div id="symbol-menu" class="symbol-menu" hidden>
+            <div id="symbol-menu-list" class="symbol-menu-list"></div>
+            <p id="symbol-menu-empty" class="symbol-menu-empty" hidden>No saved symbols yet</p>
+          </div>
+        </div>
+      </div>
+      <label class="field">
+        <span>Chart</span>
+        <select id="timeframe"></select>
+      </label>
+      <label class="field">
+        <span>Update</span>
+        <select id="update-interval"></select>
+      </label>
+      <button type="button" id="refresh" class="btn">Recalculate</button>
+    </div>
+    <div class="status" id="status">
+      <span class="pill" data-k="tv">TV · …</span>
+      <span class="pill" data-k="model">Model · …</span>
+      <span class="pill" data-k="run">Run · idle</span>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div id="chart" class="chart" role="img" aria-label="Candlestick chart with Kronos overlays"></div>
+    <aside class="drawer" aria-label="Overlay controls">
+      <h2>Overlays</h2>
+      <label class="check"><input type="checkbox" id="ov-close" checked /> Predicted close</label>
+      <label class="check"><input type="checkbox" id="ov-candles" /> Predicted candles</label>
+      <label class="check"><input type="checkbox" id="ov-envelope" checked /> High / low envelope</label>
+      <label class="check"><input type="checkbox" id="ov-volume" /> Predicted volume</label>
+      <label class="check"><input type="checkbox" id="ov-band" /> Multi-sample band</label>
+
+      <h2>Sampling</h2>
+      <label class="field">
+        <span>Temperature T</span>
+        <input type="number" id="temperature" min="0" max="5" step="0.1" value="1.0" />
+      </label>
+      <label class="field">
+        <span>Top-p</span>
+        <input type="number" id="top_p" min="0" max="1" step="0.05" value="0.9" />
+      </label>
+      <label class="field">
+        <span>Sample count</span>
+        <input type="number" id="sample_count" min="1" max="16" step="1" value="1" />
+      </label>
+      <label class="field">
+        <span>Band samples</span>
+        <input type="number" id="band_samples" min="0" max="16" step="1" value="0" />
+      </label>
+      <button type="button" id="apply-params" class="btn btn-secondary">Apply &amp; rerun</button>
+      <button type="button" id="draw-tv" class="btn btn-secondary">Draw on TradingView</button>
+
+      <div class="meta" id="meta">
+        <div><span>Latency</span><strong id="meta-latency">—</strong></div>
+        <div><span>Origin</span><strong id="meta-origin">—</strong></div>
+        <div><span>Run</span><strong id="meta-run">—</strong></div>
+      </div>
+      <p class="hint">Chart sets candle size. Update sets poll cadence (1 / 5 / 10 min); recalculation still keys off new closed bars. Chart axis uses UTC; origin metadata shows EST.</p>
+      <p class="hint">Draw on TradingView paints the predicted close path as trend-line segments on the Desktop chart (replaces the previous Diviner path).</p>
+    </aside>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

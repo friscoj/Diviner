@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+.DS_Store
+
+.env
+.env.*
+*.log
+node_modules/
+
+# Local checkouts. Clone these beside the app; see README.
+Kronos/
+tradingview-mcp/
+
+# Local market data, chart drawing ids, and model weights.
+data/*.db
+data/*.db-*
+data/tv_draw_ids.json
+data/models/
+
+web/screenshots/
